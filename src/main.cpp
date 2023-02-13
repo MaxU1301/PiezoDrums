@@ -2,10 +2,11 @@
 #include <funcs.h>
 #include <MIDI.h>
 
-const int RXD1 = 16;
-const int TXD1 = 17;
+const uint8_t RXD1 = 16;
+const uint8_t TXD1 = 17;
+const uint8_t peizoIn = 34;
+const uint8_t ledPin = 2;
 
-int peizoIn = 34;
 int threshold = 1;
 int val = 0;
 int MIDI_Val = 0;
@@ -30,19 +31,15 @@ void loop() {
   //MIDI_Val = log(val)*15.26852251;
 
   if (val > 255) {
-    digitalWrite(2, HIGH);
+    digitalWrite(ledPin, HIGH);
+    midiOnOff(NOTE, MIDI_Val, CHANNEL, 20);
     serialFormatPrint(NOTE, MIDI_Val, CHANNEL);
-    MIDI.sendNoteOn(NOTE, MIDI_Val, CHANNEL);
-    delay(20);
-    MIDI.sendNoteOff(NOTE, 0, CHANNEL);
   }
   else if (val > threshold)
   {
     digitalWrite(2, HIGH);
+    midiOnOff(NOTE, MIDI_Val, CHANNEL, 10);
     serialFormatPrint(NOTE, MIDI_Val, CHANNEL);
-    MIDI.sendNoteOn(NOTE, MIDI_Val, CHANNEL);
-    delay(10);
-    MIDI.sendNoteOff(NOTE, 0, CHANNEL);
   }
   else {
     digitalWrite(2, LOW);
