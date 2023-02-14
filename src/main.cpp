@@ -37,7 +37,7 @@ void loop() {
   }
   else if (val > threshold)
   {
-    digitalWrite(2, HIGH);
+    digitalWrite(ledPin, HIGH);
     midiOnOff(NOTE, MIDI_Val, CHANNEL, 10);
     serialFormatPrint(NOTE, MIDI_Val, CHANNEL);
   }
